@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>IndustrialPlatform.Identity</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    یادداشت معماری: طبق ماتریس وابستگی سند 01-Architecture.md، Identity نباید به پروژه Persistence
+    ارجاع بدهد (و برعکس). بنابراین Identity یک ماژول کاملاً کپسوله است و DbContext اختصاصی خود
+    (IdentityDbContext) را با ارجاع مستقیم به EF Core/Npgsql در همین پروژه پیاده‌سازی می‌کند.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IndustrialPlatform.Application\IndustrialPlatform.Application.csproj" />
+    <ProjectReference Include="..\IndustrialPlatform.Domain\IndustrialPlatform.Domain.csproj" />
+    <ProjectReference Include="..\IndustrialPlatform.Shared\IndustrialPlatform.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

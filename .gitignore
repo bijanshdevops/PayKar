@@ -1,0 +1,43 @@
+## .NET
+bin/
+obj/
+backend/**/bin/
+backend/**/obj/
+*.user
+*.suo
+
+## Frontend / Node
+node_modules/
+dist/
+build/
+.next/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.next/
+
+## Env / Secrets
+.env
+.env.local
+.env.*.local
+**/appsettings.Development.local.json
+
+## OS / IDE
+.vs/
+.vscode/
+.idea/
+.DS_Store
+*.DS_Store
+
+## Docker
+docker-data/
+
+## Runtime-uploaded user files (avatars, company docs/logos/banners, support attachments) —
+## این‌ها داده‌های واقعی کاربران محلی‌اند، نه بخشی از کدبیس، و نباید وارد ریپو شوند.
+backend/src/IndustrialPlatform.Api/uploads/
+**/uploads/
+
+## Local run/debug logs and TypeScript incremental build cache
+*.log
+*.tsbuildinfo

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>IndustrialPlatform.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IndustrialPlatform.Shared\IndustrialPlatform.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

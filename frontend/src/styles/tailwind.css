@@ -1,0 +1,4 @@
+/* طبق تسک #83: لایه Tailwind — کنار CSS خالص موجود (index.css) بدون Preflight استفاده می‌شود. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

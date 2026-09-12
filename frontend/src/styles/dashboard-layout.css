@@ -1,0 +1,582 @@
+/* ===================== جدول‌های داده در پنل‌های داشبورد ===================== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.data-table th {
+  text-align: start;
+  color: var(--color-muted);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 2px solid #eef1f5;
+}
+
+.data-table td {
+  padding: 0.65rem 0.6rem;
+  border-bottom: 1px solid #f1f3f6;
+}
+
+.data-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+/* ===================== Dashboard Sidebar Layout (تسک #73) ===================== */
+
+.dash-layout {
+  display: flex;
+  align-items: stretch;
+  height: 100vh; /* کل صفحه دقیقاً به اندازهٔ ویوپورت است؛ خود body/window هرگز اسکرول نمی‌شود —
+                    فقط ناحیهٔ محتوای داخلی (main.dash-content) اسکرول مستقل دارد. */
+  overflow: hidden;
+  background: #f6f8fa;
+}
+
+/* ===================== Dark Navy Sidebar (طبق 03/04_dashboard_spec.md بخش ۱) ===================== */
+
+.dash-sidebar {
+  width: 264px;
+  flex-shrink: 0;
+  height: 100vh; /* سایدبار همیشه دقیقاً هم‌ارتفاع ویوپورت است و همراه محتوا اسکرول نمی‌شود. */
+  overflow-y: auto; /* اگر تعداد آیتم‌های ناوبری از ارتفاع صفحه بیشتر شود، خود سایدبار اسکرول مستقل می‌گیرد. */
+  background: var(--color-navy-deep);
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.06);
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: width 0.3s ease-in-out; /* جمع/بازشدن نرم عرض سایدبار روی دسکتاپ، به‌جای پرش ناگهانی. */
+}
+
+.dash-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 var(--space-2) var(--space-3);
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dash-sidebar__brand-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.14);
+  color: var(--color-navy);
+  overflow: hidden;
+}
+
+.dash-sidebar__brand-dot[data-accent='gold'] {
+  background: linear-gradient(135deg, #f2c94c 0%, #c9971f 100%);
+  box-shadow: 0 0 0 4px rgba(242, 201, 76, 0.16);
+  color: #3a2c05;
+}
+
+.dash-sidebar__brand-dot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dash-sidebar__brand-dot-initial {
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.dash-sidebar__brand-text {
+  min-width: 0;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out, max-width 0.25s ease-in-out;
+}
+
+.dash-sidebar__brand-name {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #f4f8fb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-sidebar__brand-subtitle {
+  font-size: 0.72rem;
+  color: #7c8aa0;
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.dash-sidebar__section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #5b6b85;
+  padding: 0 var(--space-2);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  max-height: 24px;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out, margin 0.2s ease-in-out;
+}
+
+.dash-sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border-inline-start: 3px solid transparent;
+  color: #b6c2d9;
+  text-decoration: none;
+  font-size: var(--fs-sm);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, padding 0.2s ease-in-out;
+}
+
+.dash-sidebar__link-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: #7c8aa0;
+  transition: color 0.15s ease;
+}
+
+.dash-sidebar__link-label {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 180px;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out, max-width 0.25s ease-in-out;
+}
+
+.dash-sidebar__link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4f8fb;
+}
+
+.dash-sidebar__link.is-active {
+  background: var(--color-navy-elevated);
+  border-inline-start-color: var(--color-teal);
+  color: #f4f8fb;
+  font-weight: 700;
+}
+
+.dash-sidebar__link.is-active .dash-sidebar__link-icon {
+  color: var(--color-teal);
+}
+
+/* طبق فاز بازطراحی پیکسل‌به‌پیکسل داشبورد کارفرما — تم طلایی/امبر اختصاصی سایدبار کارفرما،
+   متمایز از تم سبز/تیل سایدبار کارجو (data-accent روی .dash-sidebar). */
+.dash-sidebar[data-accent='gold'] .dash-sidebar__link.is-active {
+  background: rgba(242, 201, 76, 0.14);
+  border-inline-start-color: #f2c94c;
+  color: #fbe9b8;
+}
+
+.dash-sidebar[data-accent='gold'] .dash-sidebar__link.is-active .dash-sidebar__link-icon {
+  color: #f2c94c;
+}
+
+.dash-sidebar__logout {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: var(--space-3);
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  background: rgba(248, 113, 113, 0.08);
+  color: #fca5a5;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: background 0.15s ease, padding 0.2s ease-in-out;
+}
+
+.dash-sidebar__logout:hover {
+  background: rgba(248, 113, 113, 0.16);
+  color: #fecaca;
+}
+
+.dash-sidebar__logout-label {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 180px;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out, max-width 0.25s ease-in-out;
+}
+
+.dash-content-wrap {
+  flex: 1;
+  min-width: 0;
+  height: 100vh; /* ستون محتوا هم دقیقاً هم‌ارتفاع ویوپورت است و خودش اسکرول نمی‌شود. */
+  overflow: hidden; /* فقط main.dash-content داخل آن اسکرول می‌گیرد — نه کل ستون. */
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-content {
+  flex: 1;
+  min-width: 0;
+  min-height: 0; /* حیاتی: بدون این، آیتم فلکسی به‌جای اسکرول‌شدن، والد را کش می‌دهد و نوار بالا هم اسکرول می‌شود. */
+  overflow-y: auto; /* تنها بخش اسکرول‌شوندهٔ کل چیدمان داشبورد. */
+  padding: var(--space-4) var(--space-4);
+}
+
+/* ===================== نوار بالای داشبورد (طبق فاز بازطراحی پیکسل‌به‌پیکسل) ===================== */
+
+/* طبق درخواست محصولی «لوگوی پلتفرم در فضای خالی وسط هدر داشبورد، مشترک بین همه نقش‌ها»: چیدمان از
+   flex+space-between به Grid سه‌ستونه (start/center/end) تغییر کرد تا لوگو دقیقاً وسط نوار بماند —
+   صرف‌نظر از اینکه عنوان صفحه (ستون شروع) یا آواتار/دراپ‌داون پروفایل (ستون پایان) چه عرضی دارند
+   (با space-between سه‌فرزندی، ستون وسط صرفاً بین دو طرف «پخش» می‌شد نه واقعاً هم‌مرکز با کل نوار). */
+.dash-topbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0; /* نوار بالا هرگز توسط اسکرول محتوای زیرش فشرده یا جابه‌جا نمی‌شود — همیشه بالای ستون ثابت می‌ماند. */
+  background: #ffffff;
+  border-bottom: 1px solid #e9edf3;
+  padding: 0.9rem var(--space-4);
+}
+
+.dash-topbar__center {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.dash-topbar__center-logo {
+  /* طبق دومین دور اصلاح اندازهٔ محصولی: حتی ۴۴px هم به اندازهٔ کافی برجسته نبود — به ۶۰px افزایش
+     یافت. چون .dash-topbar پدینگ عمودی ۰.۹rem دارد و ارتفاعش بر اساس محتوا تعیین می‌شود (نه مقدار
+     ثابت)، نوار به‌صورت خودکار بلندتر می‌شود و چیزی برش نمی‌خورد. */
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
+}
+
+.dash-topbar__start {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.dash-topbar__end {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.dash-topbar__hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: #f6f8fa;
+  border: 1px solid #e6e9ee;
+  color: var(--color-navy);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.dash-topbar__hamburger:hover {
+  background: #eef1f5;
+  border-color: #d4dae3;
+}
+
+.dash-topbar__title {
+  min-width: 0;
+}
+
+.dash-topbar__title-main {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-topbar__title-sub {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-topbar__bell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #e6e9ee;
+  color: var(--color-muted);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.dash-topbar__bell:hover {
+  color: var(--color-navy);
+  border-color: #d4dae3;
+}
+
+.dash-topbar__bell-badge {
+  position: absolute;
+  top: -4px;
+  inset-inline-end: -4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #f59e0b;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 2px solid #ffffff;
+}
+
+.dash-topbar__profile-wrap {
+  position: relative;
+}
+
+.dash-topbar__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.6rem 0.35rem 0.4rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #e6e9ee;
+  cursor: pointer;
+  max-width: 260px;
+}
+
+.dash-topbar__profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.dash-topbar__profile-avatar--initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef2f7;
+  color: var(--color-navy);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+.dash-topbar__profile-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  min-width: 0;
+  text-align: start;
+}
+
+.dash-topbar__profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #94a3b8;
+}
+
+.dash-topbar__profile-name-row svg {
+  transform: rotate(90deg); /* آیکون فلش راست‌گرد پایه، برای ظاهر «شورون رو به پایین» چرخانده می‌شود. */
+  flex-shrink: 0;
+}
+
+.dash-topbar__profile-name {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--color-navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.dash-topbar__profile-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}
+
+.dash-topbar__dropdown {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(100% + 0.5rem);
+  min-width: 190px;
+  background: #ffffff;
+  border: 1px solid #e6e9ee;
+  border-radius: var(--radius-md, 12px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  padding: 0.35rem;
+  z-index: 250;
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-topbar__dropdown-item {
+  display: block;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  color: #334155;
+  text-decoration: none;
+  text-align: start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dash-topbar__dropdown-item:hover {
+  background: #f1f5f9;
+}
+
+.dash-topbar__dropdown-item--danger {
+  color: var(--color-danger);
+}
+
+.dash-sidebar__scrim {
+  display: none;
+}
+
+/* ===================== حالت جمع‌شده (باریک) سایدبار — فقط دسکتاپ، با دکمهٔ همبرگر نوار بالا کنترل می‌شود ===================== */
+
+@media (min-width: 901px) {
+  .dash-sidebar--collapsed {
+    width: 76px;
+  }
+
+  .dash-sidebar--collapsed .dash-sidebar__brand {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  /* به‌جای display:none ناگهانی، لیبل‌ها با محوشدن opacity + جمع‌شدن max-width به صفر ناپدید
+     می‌شوند (هم‌زمان با transition عرض خود سایدبار)، و overflow:hidden + white-space:nowrap
+     (که در حالت پایه تعریف شده) تضمین می‌کند متن حین انیمیشن به خط بعد نمی‌شکند. */
+  .dash-sidebar--collapsed .dash-sidebar__brand-text,
+  .dash-sidebar--collapsed .dash-sidebar__link-label,
+  .dash-sidebar--collapsed .dash-sidebar__logout-label {
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dash-sidebar--collapsed .dash-sidebar__section-title {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    pointer-events: none;
+  }
+
+  .dash-sidebar--collapsed .dash-sidebar__link,
+  .dash-sidebar--collapsed .dash-sidebar__logout {
+    justify-content: center;
+    padding-inline: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .dash-layout {
+    flex-direction: column;
+  }
+
+  .dash-sidebar {
+    position: fixed;
+    inset-inline-start: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 300;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: -20px 0 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .dash-sidebar--open {
+    transform: translateX(0);
+  }
+
+  .dash-sidebar__scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(25, 38, 58, 0.35);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .dash-sidebar__scrim[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .dash-content {
+    padding: var(--space-3);
+  }
+
+  .dash-topbar {
+    padding: var(--space-3);
+  }
+
+  .dash-topbar__profile-text {
+    display: none;
+  }
+
+  /* در عرض‌های باریک، عنوان صفحه (ستون شروع) و آواتار/زنگوله (ستون پایان) کل فضا را اشغال می‌کنند؛
+     لوگوی وسط برای جلوگیری از فشردگی/همپوشانی مخفی می‌شود (برند اصلی همچنان در صفحات ورود قابل مشاهده است). */
+  .dash-topbar__center {
+    display: none;
+  }
+}

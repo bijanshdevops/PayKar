@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>IndustrialPlatform.Api</RootNamespace>
+    <UserSecretsId>industrialplatform-api-secrets</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+
+    <!--
+      یادداشت: AspNetCore.HealthChecks.NpgSql به‌صورت transitive نسخه پایین‌تری از
+      Microsoft.EntityFrameworkCore.Relational می‌خواهد که با نسخه مورد استفاده در
+      Persistence/Identity (9.0.4) تداخل نسخه ایجاد می‌کند (هشدار MSB3277). ارجاع مستقیم زیر
+      نسخه را در کل گراف وابستگی یکسان می‌کند.
+    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.4" />
+
+    <!-- ابزار dotnet-ef برای اجرای Migration نیازمند این پکیج در پروژه Startup است -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IndustrialPlatform.Application\IndustrialPlatform.Application.csproj" />
+    <ProjectReference Include="..\IndustrialPlatform.Identity\IndustrialPlatform.Identity.csproj" />
+    <ProjectReference Include="..\IndustrialPlatform.Persistence\IndustrialPlatform.Persistence.csproj" />
+    <ProjectReference Include="..\IndustrialPlatform.Infrastructure\IndustrialPlatform.Infrastructure.csproj" />
+    <ProjectReference Include="..\IndustrialPlatform.Shared\IndustrialPlatform.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
