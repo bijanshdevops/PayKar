@@ -1,4 +1,5 @@
 import type { DailyRevenuePoint } from '@/features/dashboard/ownerDashboardApi';
+import { formatToJalali } from '@/shared/utils/date';
 
 /**
  * نمودار میله‌ای ساده روند درآمد روزانه — بدون وابستگی به کتابخانه نمودارسازی خارجی
@@ -31,7 +32,7 @@ export default function RevenueBarChart({ data }: { data: DailyRevenuePoint[] })
                 opacity={0.85}
               >
                 <title>
-                  {new Date(point.date).toLocaleDateString('fa-IR')}: {point.amountInRials.toLocaleString('fa-IR')} ریال
+                  {formatToJalali(point.date)}: {point.amountInRials.toLocaleString('fa-IR')} ریال
                 </title>
               </rect>
             </g>
@@ -40,8 +41,8 @@ export default function RevenueBarChart({ data }: { data: DailyRevenuePoint[] })
         <line x1={0} y1={height - paddingBottom} x2={width} y2={height - paddingBottom} stroke="var(--color-border)" />
       </svg>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--fs-xs, 0.7rem)', color: 'var(--color-muted)' }}>
-        <span>{new Date(data[0].date).toLocaleDateString('fa-IR')}</span>
-        <span>{new Date(data[data.length - 1].date).toLocaleDateString('fa-IR')}</span>
+        <span>{formatToJalali(data[0].date)}</span>
+        <span>{formatToJalali(data[data.length - 1].date)}</span>
       </div>
     </div>
   );

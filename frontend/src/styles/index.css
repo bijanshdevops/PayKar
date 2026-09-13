@@ -1794,3 +1794,89 @@ textarea {
     padding: var(--space-3);
   }
 }
+
+/* ---------- تقویم شمسی (PersianDatePicker / react-multi-date-picker) ----------
+   تم رنگی کتابخانه با کلاس‌های داخلی‌اش (rmdp-*) هم‌راستا با پالت برند (Navy/Amber)
+   بازنویسی می‌شود؛ خود ورودی (input) از طریق prop اختصاصی `inputClass` در
+   PersianDatePicker.tsx استایل می‌گیرد، این بخش فقط پنل باز‌شونده‌ی تقویم را می‌پوشاند. */
+
+.persian-date-picker {
+  width: 100%;
+  direction: rtl;
+}
+
+.persian-date-picker-panel.rmdp-wrapper {
+  box-shadow: 0 20px 45px -12px rgba(20, 30, 46, 0.35);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-family: var(--font-family);
+}
+
+.persian-date-picker-panel .rmdp-calendar {
+  padding: 0.5rem;
+}
+
+.persian-date-picker-panel .rmdp-header {
+  background: var(--color-navy);
+  color: #ffffff;
+  margin-top: 0;
+  padding-top: 0.5rem;
+}
+
+.persian-date-picker-panel .rmdp-header-values {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.persian-date-picker-panel .rmdp-arrow {
+  border-color: #ffffff;
+}
+
+.persian-date-picker-panel .rmdp-arrow-container:hover {
+  background: var(--color-teal);
+  box-shadow: none;
+}
+
+.persian-date-picker-panel .rmdp-arrow-container:hover .rmdp-arrow {
+  border-color: var(--color-navy);
+}
+
+.persian-date-picker-panel .rmdp-week-day {
+  color: var(--color-slate);
+  font-weight: 600;
+}
+
+.persian-date-picker-panel .rmdp-day.rmdp-today span {
+  background: transparent;
+  border: 1.5px solid var(--color-teal);
+  color: var(--color-navy);
+}
+
+.persian-date-picker-panel .rmdp-day.rmdp-selected span:not(.highlight) {
+  background: var(--color-teal);
+  color: var(--color-navy);
+  box-shadow: none;
+  font-weight: 700;
+}
+
+.persian-date-picker-panel .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
+  background: var(--color-teal-dark);
+  color: #ffffff;
+}
+
+.persian-date-picker-panel .rmdp-day.rmdp-disabled {
+  color: var(--color-slate);
+}
+
+.persian-date-picker-panel .rmdp-time-picker input {
+  color: var(--color-navy);
+}
+
+.persian-date-picker-panel .rmdp-time-picker .rmdp-am,
+.persian-date-picker-panel .rmdp-time-picker div input {
+  border-color: var(--color-border);
+}
+
+.persian-date-picker-panel .b-deselect {
+  color: var(--color-danger);
+}

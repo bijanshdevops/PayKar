@@ -1,4 +1,5 @@
 import type { CompanyDashboardDailyViewsPoint } from '@/features/companies/companyApi';
+import { formatToJalali } from '@/shared/utils/date';
 
 /**
  * نمودار ناحیه‌ای/خطی روان بازدید ۳۰ روزه («گزارش بازدید آگهی‌ها») — منحنی نرم با Catmull-Rom→Bezier
@@ -53,7 +54,7 @@ export default function SmoothAreaChart({ data }: { data: CompanyDashboardDailyV
         {points.map((p) => (
           <circle key={p.date} cx={p.x} cy={p.y} r={2.5} fill="#f59e0b">
             <title>
-              {new Date(p.date).toLocaleDateString('fa-IR')}: {p.viewsCount.toLocaleString('fa-IR')} بازدید
+              {formatToJalali(p.date)}: {p.viewsCount.toLocaleString('fa-IR')} بازدید
             </title>
           </circle>
         ))}
@@ -66,7 +67,7 @@ export default function SmoothAreaChart({ data }: { data: CompanyDashboardDailyV
               textAnchor="middle"
               style={{ fontSize: 10, fill: 'var(--color-muted, #94a3b8)' }}
             >
-              {new Date(p.date).toLocaleDateString('fa-IR', { day: 'numeric', month: 'numeric' })}
+              {formatToJalali(p.date, 'd/M')}
             </text>
           ) : null
         )}

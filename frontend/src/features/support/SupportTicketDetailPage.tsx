@@ -34,6 +34,7 @@ import {
   TicketPriorityLabels
 } from '@/features/support/SupportTicketStatusLabels';
 import { useToast } from '@/features/toast/useToast';
+import PersianDate from '@/shared/components/PersianDate';
 
 const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.pdf', '.docx'];
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
@@ -303,10 +304,10 @@ export default function SupportTicketDetailPage() {
                 <PriorityPill priority={ticket.priority} />
               </div>
               <InfoRow icon={Calendar} label="تاریخ ایجاد">
-                {new Date(ticket.createdAtUtc).toLocaleDateString('fa-IR')}
+                <PersianDate date={ticket.createdAtUtc} />
               </InfoRow>
               <InfoRow icon={Clock} label="آخرین بروزرسانی">
-                {new Date(ticket.lastActivityAtUtc).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' })}
+                <PersianDate date={ticket.lastActivityAtUtc} relative />
               </InfoRow>
             </div>
           </div>
@@ -357,7 +358,7 @@ export default function SupportTicketDetailPage() {
                         </a>
                       )}
                       <p className="mt-1.5 text-[11px] text-slate-400">
-                        {new Date(message.createdAtUtc).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' })}
+                        <PersianDate date={message.createdAtUtc} relative />
                       </p>
                     </div>
                   </div>
@@ -384,7 +385,7 @@ export default function SupportTicketDetailPage() {
                         </a>
                       )}
                       <p className="mt-1.5 text-[11px] text-slate-400">
-                        {new Date(message.createdAtUtc).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' })}
+                        <PersianDate date={message.createdAtUtc} relative />
                       </p>
                     </div>
                   </div>

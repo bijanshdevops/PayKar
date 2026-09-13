@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useGetMyApplicationsQuery } from '@/features/candidates/candidateApi';
 import { ApplicationStatusLabels } from '@/shared/enums';
+import PersianDate from '@/shared/components/PersianDate';
 
 function toPersianDigits(n: number) {
   return n.toLocaleString('fa-IR');
@@ -92,7 +93,7 @@ export default function CandidateApplicationsPage() {
                             {ApplicationStatusLabels[app.status] ?? app.status}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-slate-500">{new Date(app.createdAtUtc).toLocaleDateString('fa-IR')}</td>
+                        <td className="px-4 py-3 text-slate-500"><PersianDate date={app.createdAtUtc} /></td>
                         <td className="px-4 py-3 text-end">
                           <Link to={`/job-ads/${app.jobAdId}`} className="text-xs font-semibold text-emerald-600 no-underline hover:text-emerald-700">
                             مشاهده آگهی ←

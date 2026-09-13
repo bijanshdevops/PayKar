@@ -7,6 +7,7 @@ import {
   type SupportTicketStatus
 } from '@/features/support/supportApi';
 import { SupportTicketStatusColors, SupportTicketStatusLabels, TicketDepartmentLabels, TicketPriorityColors, TicketPriorityLabels } from '@/features/support/SupportTicketStatusLabels';
+import PersianDate from '@/shared/components/PersianDate';
 
 type FilterKey = 'All' | SupportTicketStatus;
 
@@ -121,7 +122,7 @@ export default function AdminSupportTicketsPage() {
                       </span>
                     </td>
                     <td className="px-3 py-3 text-xs text-slate-400">
-                      {new Date(ticket.lastActivityAtUtc).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' })}
+                      <PersianDate date={ticket.lastActivityAtUtc} relative />
                     </td>
                     <td className="px-3 py-3">
                       <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold" style={{ background: statusColors.bg, color: statusColors.fg }}>

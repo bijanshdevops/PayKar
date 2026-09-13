@@ -7,6 +7,7 @@ import { useGetMySupportTicketsQuery } from '@/features/support/supportApi';
 import { useZoneLabelMap } from '@/features/geography/useZoneLabel';
 import { ApplicationStatusLabels } from '@/shared/enums';
 import JobAdCard from '@/features/jobAds/JobAdCard';
+import PersianDate from '@/shared/components/PersianDate';
 
 const statusBadgeColors: Record<string, { bg: string; fg: string }> = {
   Submitted: { bg: '#eef2ff', fg: '#3730a3' },
@@ -175,7 +176,7 @@ export default function CandidateDashboardHomePage() {
                 <div key={app.id} className="flex items-center justify-between gap-2 py-3">
                   <div className="min-w-0">
                     <div className="truncate text-sm font-semibold text-slate-700">{app.jobAdTitle}</div>
-                    <div className="text-[11px] text-slate-400">{new Date(app.createdAtUtc).toLocaleDateString('fa-IR')}</div>
+                    <div className="text-[11px] text-slate-400"><PersianDate date={app.createdAtUtc} /></div>
                   </div>
                   <span className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium" style={{ background: colors.bg, color: colors.fg }}>
                     {ApplicationStatusLabels[app.status] ?? app.status}

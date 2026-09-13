@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { X } from 'lucide-react';
 import { useCreateJobAdMutation, useUpdateJobAdMutation, type JobAd, type JobAdFormValues } from '@/features/jobAds/jobAdApi';
+import PersianDatePicker from '@/shared/components/PersianDatePicker';
 import {
   WorkShiftLabels,
   MealPlanLabels,
@@ -56,7 +57,7 @@ function toFormValues(ad: JobAd): JobAdFormValues {
     minExperienceYears: ad.minExperienceYears ?? undefined,
     militaryServiceStatus: ad.militaryServiceStatus ?? undefined,
     headcountNeeded: ad.headcountNeeded ?? undefined,
-    applicationDeadlineUtc: ad.applicationDeadlineUtc ? ad.applicationDeadlineUtc.slice(0, 10) : undefined,
+    applicationDeadlineUtc: ad.applicationDeadlineUtc ?? undefined,
     requiredSkills: ad.requiredSkills ?? undefined,
     additionalBenefits: ad.additionalBenefits ?? undefined
   };
@@ -82,6 +83,7 @@ export default function JobAdFormModal({
     handleSubmit,
     watch,
     trigger,
+    control,
     formState: { errors }
   } = useForm<JobAdFormValues>({
     defaultValues: editingAd ? toFormValues(editingAd) : emptyDefaults
@@ -95,7 +97,19 @@ export default function JobAdFormModal({
     if (isValid) setStep(2);
   };
 
+  /**
+   * این تابع دیگر هرگز از طریق submit طبیعی مرورگر (که علت اصلی باگ «کلیک روی مرحله بعد، آگهی
+   * ناقص می‌سازد» بود) فراخوانی نمی‌شود — فقط و فقط با کلیک صریح روی دکمهٔ نهایی «ثبت آگهی» در
+   * مرحله ۲، از طریق handleSubmit(onSubmit)() به‌صورت مستقیم در onClick صدا زده می‌شود (نگاه کنید
+   * به <form onSubmit> پایین‌تر که عمداً preventDefault-only شده). شرط step===1 هم به‌عنوان یک
+   * لایهٔ دفاعی اضافه، برای اطمینان کامل، نگه داشته شده است.
+   */
   const onSubmit = async (values: JobAdFormValues) => {
+    if (step === 1) {
+      await goToStep2();
+      return;
+    }
+
     setServerError(null);
     const result = editingAd ? await updateJobAd({ id: editingAd.id, body: values }) : await createJobAd(values);
 
@@ -130,7 +144,27 @@ export default function JobAdFormModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col overflow-hidden">
+        <form
+          onSubmit={(e) => {
+            // ریشهٔ اصلی باگ «کلیک روی مرحله بعد، آگهی ناقص می‌سازد و مودال بسته می‌شود» این بود
+            // که هر دو مرحله در یک <form> واحد هستند و رویداد submit طبیعی مرورگر (مثلاً با
+            // Enter در یک اینپوت متنی، یا هر رفتار غیرمنتظرهٔ دیگر مرورگر/افزونه) مستقیماً به
+            // handleSubmit(onSubmit) می‌رسید و همان لحظه به API ارسال می‌شد. راه‌حل قطعی: فرم
+            // دیگر هیچ‌وقت از طریق submit طبیعی ارسال نمی‌شود؛ همیشه preventDefault می‌شود و ارسال
+            // واقعی فقط با کلیک صریح روی دکمهٔ «ثبت آگهی» در مرحله ۲ (پایین‌تر، onClick مستقیم)
+            // انجام می‌گیرد.
+            e.preventDefault();
+            if (step === 1) void goToStep2();
+          }}
+          onKeyDown={(e) => {
+            // در مرحله ۱، Enter داخل اینپوت‌های تک‌خطی (به‌جز textarea) به‌جای submit، به مرحله بعد می‌رود.
+            if (e.key === 'Enter' && step === 1 && (e.target as HTMLElement).tagName !== 'TEXTAREA') {
+              e.preventDefault();
+              void goToStep2();
+            }
+          }}
+          className="flex flex-1 flex-col overflow-hidden"
+        >
           <div className="flex-1 space-y-4 overflow-y-auto px-6 py-5">
             {step === 1 && (
               <>
@@ -273,7 +307,17 @@ export default function JobAdFormModal({
                   </div>
                   <div>
                     <label className={labelClass}>مهلت ارسال رزومه</label>
-                    <input type="date" className={inputClass} {...register('applicationDeadlineUtc')} />
+                    <Controller
+                      name="applicationDeadlineUtc"
+                      control={control}
+                      render={({ field }) => (
+                        <PersianDatePicker
+                          value={field.value ?? null}
+                          onChange={(iso) => field.onChange(iso ?? undefined)}
+                          placeholder="انتخاب مهلت ارسال رزومه"
+                        />
+                      )}
+                    />
                   </div>
                 </div>
 
@@ -321,7 +365,8 @@ export default function JobAdFormModal({
               </button>
             ) : (
               <button
-                type="submit"
+                type="button"
+                onClick={handleSubmit(onSubmit)}
                 disabled={isCreating || isUpdating}
                 className="rounded-xl bg-emerald-600 px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
               >

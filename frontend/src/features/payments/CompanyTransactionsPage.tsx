@@ -24,6 +24,7 @@ import {
 } from '@/features/payments/paymentApi';
 import { PaymentPurposeLabels, PaymentTransactionStatusLabels } from '@/shared/enums';
 import { useToast } from '@/features/toast/useToast';
+import { formatToJalali, formatRelativeJalali } from '@/shared/utils/date';
 
 type StatusFilter = 'All' | PaymentTransactionStatus;
 type PurposeFilter = 'All' | PaymentPurpose;
@@ -42,20 +43,9 @@ const STATUS_STYLES: Record<PaymentTransactionStatus, { bg: string; fg: string; 
 
 const toToman = (rials: number) => Math.round(rials / 10).toLocaleString('fa-IR');
 
-const formatDateTime = (iso: string) => new Date(iso).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' });
+const formatDateTime = (iso: string) => formatToJalali(iso, 'yyyy/MM/dd - HH:mm');
 
-function relativeFromNow(iso: string): string {
-  const diffMs = Date.now() - new Date(iso).getTime();
-  const minutes = Math.floor(diffMs / 60000);
-  if (minutes < 1) return 'همین الان';
-  if (minutes < 60) return `${minutes.toLocaleString('fa-IR')} دقیقه پیش`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours.toLocaleString('fa-IR')} ساعت پیش`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `${days.toLocaleString('fa-IR')} روز پیش`;
-  const months = Math.floor(days / 30);
-  return `${months.toLocaleString('fa-IR')} ماه پیش`;
-}
+const relativeFromNow = (iso: string): string => formatRelativeJalali(iso);
 
 function downloadCsv(filename: string, rows: string[][]) {
   const csvContent = rows.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(',')).join('\r\n');
