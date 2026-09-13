@@ -35,6 +35,7 @@ import {
   HeadsetIcon
 } from '@/components/icons/DashboardIcons';
 import { MailIcon, PhoneIcon } from '@/components/icons/AuthIcons';
+import { formatToJalali } from '@/shared/utils/date';
 
 interface CompanyFormValues {
   name: string;
@@ -65,7 +66,7 @@ function formatFileSize(bytes: number): string {
 }
 
 function formatUploadDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('fa-IR');
+  return formatToJalali(iso);
 }
 
 function isImageFile(fileName: string): boolean {

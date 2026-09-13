@@ -28,6 +28,7 @@ import {
   type BannerSlot
 } from '@/features/ads/bannerAdApi';
 import { useToast } from '@/features/toast/useToast';
+import { formatToJalali } from '@/shared/utils/date';
 
 const PLACEMENT_LABELS: Record<BannerPlacement, string> = {
   Home: 'صفحه اصلی',
@@ -41,7 +42,7 @@ const RENEWAL_DISCOUNT_RATE = 0.2;
 /** جایگاه‌های تبلیغاتی طبق تصمیم بیزینسی این فاز، فقط با تومان قیمت‌گذاری شده‌اند (نه ریال) — برخلاف مبالغ InRials بقیه سیستم. */
 const formatToman = (amount: number) => Math.round(amount).toLocaleString('fa-IR');
 
-const formatDate = (iso: string | null) => (iso ? new Date(iso).toLocaleDateString('fa-IR', { dateStyle: 'medium' }) : '—');
+const formatDate = (iso: string | null) => formatToJalali(iso, 'd MMMM yyyy');
 
 const STATUS_STYLES: Record<BannerAdStatus, { bg: string; fg: string; border: string; label: string; Icon: typeof CheckCircle2 }> = {
   Draft: { bg: '#f1f5f9', fg: '#475569', border: '#e2e8f0', label: 'پیش‌نویس', Icon: Clock },

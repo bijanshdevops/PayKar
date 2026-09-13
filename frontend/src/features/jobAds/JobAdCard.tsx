@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { JobAd } from '@/features/jobAds/jobAdApi';
 import { WorkShiftLabels, ContractTypeLabels, SalaryRangeTypeLabels } from '@/shared/enums';
+import { formatRelativeJalali } from '@/shared/utils/date';
 
 function VerifiedTick() {
   return (
@@ -53,10 +54,7 @@ function BookmarkIcon({ filled }: { filled: boolean }) {
 
 /** فاصله نسبی از انتشار آگهی — فقط بر اساس publishedAtUtc واقعی (بدون شمارنده بازدید جعلی). */
 function relativeDaysFa(dateIso: string): string {
-  const days = Math.floor((Date.now() - new Date(dateIso).getTime()) / (1000 * 60 * 60 * 24));
-  if (days <= 0) return 'امروز';
-  if (days === 1) return 'دیروز';
-  return `${days.toLocaleString('fa-IR')} روز پیش`;
+  return formatRelativeJalali(dateIso);
 }
 
 export default function JobAdCard({

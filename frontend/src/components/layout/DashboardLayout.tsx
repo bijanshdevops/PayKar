@@ -7,6 +7,7 @@ import { useLogoutMutation } from "@/features/auth/authApi";
 import { useGetMyCompanyQuery } from "@/features/companies/companyApi";
 import { useGetMyResumeQuery } from "@/features/candidates/candidateApi";
 import { useGetMySupportTicketsQuery } from "@/features/support/supportApi";
+import { formatToJalali } from "@/shared/utils/date";
 import {
   GridIcon,
   HomeIcon,
@@ -488,7 +489,10 @@ export default function DashboardLayout() {
 
             <div className="dash-topbar__title">
               <div className="dash-topbar__title-main">{pageTitle}</div>
-              <div className="dash-topbar__title-sub">{welcomeSubtitle}</div>
+              <div className="dash-topbar__title-sub">
+                {welcomeSubtitle}
+                <span className="dash-topbar__title-date"> · {formatToJalali(new Date(), 'EEEE d MMMM yyyy')}</span>
+              </div>
             </div>
           </div>
 

@@ -25,6 +25,7 @@ import { EyeIcon } from "@/components/icons/AuthIcons";
 import Sparkline from "@/features/dashboard/Sparkline";
 import SmoothAreaChart from "@/features/dashboard/SmoothAreaChart";
 import ViewsByJobAdDonut from "@/features/dashboard/ViewsByJobAdDonut";
+import { formatRelativeJalali, formatToJalali } from "@/shared/utils/date";
 
 /** رنگ بج درصد تطابق — طبق سند 04_company_dashboard_spec.md بخش ۴.۲. */
 function matchScoreColor(score: number): { bg: string; fg: string } {
@@ -44,15 +45,7 @@ const statusBadgeColors: Record<string, { bg: string; fg: string }> = {
 };
 
 function timeAgoFa(iso: string): string {
-  const diffMs = Date.now() - new Date(iso).getTime();
-  const minutes = Math.floor(diffMs / 60_000);
-  if (minutes < 1) return "همین الان";
-  if (minutes < 60) return `${minutes.toLocaleString("fa-IR")} دقیقه پیش`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours.toLocaleString("fa-IR")} ساعت پیش`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `${days.toLocaleString("fa-IR")} روز پیش`;
-  return new Date(iso).toLocaleDateString("fa-IR");
+  return formatRelativeJalali(iso);
 }
 
 /**
@@ -411,11 +404,7 @@ export default function CompanyDashboardHomePage() {
                         </span>
                       </td>
                       <td className="whitespace-nowrap py-2.5 text-slate-500">
-                        {ad.publishedAtUtc
-                          ? new Date(ad.publishedAtUtc).toLocaleDateString(
-                              "fa-IR",
-                            )
-                          : "—"}
+                        {ad.publishedAtUtc ? formatToJalali(ad.publishedAtUtc) : "—"}
                       </td>
                       <td className="py-2.5 text-slate-500">
                         {ad.viewsCount.toLocaleString("fa-IR")}

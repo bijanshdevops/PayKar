@@ -333,6 +333,16 @@
   text-overflow: ellipsis;
 }
 
+.dash-topbar__title-date {
+  color: var(--color-slate);
+}
+
+@media (max-width: 640px) {
+  .dash-topbar__title-date {
+    display: none;
+  }
+}
+
 .dash-topbar__bell {
   position: relative;
   display: flex;

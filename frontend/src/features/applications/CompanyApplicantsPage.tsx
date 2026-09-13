@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useGetRecentApplicantsForCompanyQuery, useUpdateApplicationStatusMutation } from '@/features/applications/applicationApi';
 import { ApplicationStatusLabels } from '@/shared/enums';
+import PersianDate from '@/shared/components/PersianDate';
 
 const nextStatusOptions: Record<string, string[]> = {
   Submitted: ['Reviewed', 'Rejected'],
@@ -83,7 +84,7 @@ export default function CompanyApplicantsPage() {
                       برای آگهی: {app.jobAdTitle}
                     </Link>
                     <div className="mt-1 text-[11px] text-slate-400">
-                      کد رهگیری: {app.trackingToken} — {new Date(app.createdAtUtc).toLocaleDateString('fa-IR')}
+                      کد رهگیری: {app.trackingToken} — <PersianDate date={app.createdAtUtc} />
                     </div>
                   </div>
                 </div>

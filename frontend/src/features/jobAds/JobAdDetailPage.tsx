@@ -15,6 +15,7 @@ import {
 } from '@/shared/enums';
 import { useSubmitApplicationMutation, useSubmitDirectApplicationMutation } from '@/features/applications/applicationApi';
 import { useGetMyResumeQuery } from '@/features/candidates/candidateApi';
+import PersianDate from '@/shared/components/PersianDate';
 
 export default function JobAdDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -289,7 +290,7 @@ export default function JobAdDetailPage() {
               <div className="jobad-fact"><span className="text-muted">تعداد نیرو</span><strong>{jobAd.headcountNeeded.toLocaleString('fa-IR')} نفر</strong></div>
             )}
             {jobAd.applicationDeadlineUtc && (
-              <div className="jobad-fact"><span className="text-muted">مهلت ارسال رزومه</span><strong>{new Date(jobAd.applicationDeadlineUtc).toLocaleDateString('fa-IR')}</strong></div>
+              <div className="jobad-fact"><span className="text-muted">مهلت ارسال رزومه</span><strong><PersianDate date={jobAd.applicationDeadlineUtc} /></strong></div>
             )}
           </div>
 

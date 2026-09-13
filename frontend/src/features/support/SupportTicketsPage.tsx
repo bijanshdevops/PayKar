@@ -31,6 +31,7 @@ import {
   TicketPriorityLabels
 } from '@/features/support/SupportTicketStatusLabels';
 import { useToast } from '@/features/toast/useToast';
+import PersianDate from '@/shared/components/PersianDate';
 
 const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.pdf', '.docx'];
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
@@ -402,7 +403,7 @@ export default function SupportTicketsPage() {
                     <td className="px-3 py-3 text-slate-500">{TicketDepartmentLabels[ticket.department]}</td>
                     <td className="px-3 py-3"><PriorityBadge priority={ticket.priority} /></td>
                     <td className="px-3 py-3 text-xs text-slate-400">
-                      {new Date(ticket.lastActivityAtUtc).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' })}
+                      <PersianDate date={ticket.lastActivityAtUtc} relative />
                     </td>
                     <td className="px-3 py-3"><StatusBadge status={ticket.status} /></td>
                     <td className="px-3 py-3">

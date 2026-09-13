@@ -28,6 +28,8 @@ import {
 } from '@/features/applications/applicationApi';
 import { useGetJobAdByIdQuery } from '@/features/jobAds/jobAdApi';
 import type { EmployerApplicant } from '@/features/candidates/candidateApi';
+import PersianDate from '@/shared/components/PersianDate';
+import PersianDatePicker from '@/shared/components/PersianDatePicker';
 import { ApplicationStatusLabels, JobAdStatusLabels } from '@/shared/enums';
 
 /**
@@ -97,13 +99,6 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
-/** تبدیل ISO UTC به مقدار قابل‌قبول برای input[type=datetime-local] (زمان محلی مرورگر). */
-function toDateTimeLocalValue(isoUtc: string): string {
-  const d = new Date(isoUtc);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
 function ApplicantCard({ applicant, isSelected, onSelect }: { applicant: EmployerApplicant; isSelected: boolean; onSelect: () => void }) {
   const skillTags = (applicant.candidateSkills ?? '')
     .split(/[,،]/)
@@ -139,7 +134,7 @@ function ApplicantCard({ applicant, isSelected, onSelect }: { applicant: Employe
               </span>
             )}
           </div>
-          <div className="mt-0.5 text-[11px] text-slate-400">{new Date(applicant.createdAtUtc).toLocaleDateString('fa-IR')}</div>
+          <div className="mt-0.5 text-[11px] text-slate-400"><PersianDate date={applicant.createdAtUtc} /></div>
           <div className="mt-2 flex flex-wrap items-center gap-1.5">
             <StatusBadge status={applicant.status} />
             {skillTags.map((tag) => (
@@ -160,7 +155,7 @@ function ApplicantDetailPanel({ applicant, onUpdated }: { applicant: EmployerApp
 
   const [status, setStatus] = useState(applicant.status);
   const [notes, setNotes] = useState(applicant.companyNotes ?? '');
-  const [interviewAt, setInterviewAt] = useState(applicant.interviewDateTimeUtc ? toDateTimeLocalValue(applicant.interviewDateTimeUtc) : '');
+  const [interviewAt, setInterviewAt] = useState<string | null>(applicant.interviewDateTimeUtc ?? null);
   const [notify, setNotify] = useState(true);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [justSaved, setJustSaved] = useState(false);
@@ -181,7 +176,7 @@ function ApplicantDetailPanel({ applicant, onUpdated }: { applicant: EmployerApp
         applicationId: applicant.applicationId,
         newStatus: status,
         companyNotes: notes.trim() ? notes.trim() : null,
-        interviewDateTimeUtc: interviewAt ? new Date(interviewAt).toISOString() : null,
+        interviewDateTimeUtc: interviewAt,
         notifyCandidate: notify
       }).unwrap();
       setJustSaved(true);
@@ -372,15 +367,17 @@ function ApplicantDetailPanel({ applicant, onUpdated }: { applicant: EmployerApp
             <Calendar className="h-3.5 w-3.5" />
             زمان مصاحبه (اختیاری)
           </label>
-          <input
-            type="datetime-local"
-            value={interviewAt}
-            onChange={(e) => {
-              setInterviewAt(e.target.value);
-              markDirty();
-            }}
-            className="mb-3 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-emerald-500 focus:outline-none"
-          />
+          <div className="mb-3">
+            <PersianDatePicker
+              value={interviewAt}
+              onChange={(iso) => {
+                setInterviewAt(iso);
+                markDirty();
+              }}
+              showTime
+              placeholder="انتخاب تاریخ و ساعت مصاحبه"
+            />
+          </div>
 
           <label className="mb-4 flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-600">
             <input
